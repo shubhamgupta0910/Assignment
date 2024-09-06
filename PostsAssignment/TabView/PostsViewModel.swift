@@ -29,7 +29,8 @@ class PostsViewModel {
     }
     
     func fetchPosts() {
-        NetworkService.shared.fetchPosts()
+        let network = NetworkService()
+        network.fetchPosts()
             .observe(on: MainScheduler.instance)
             .subscribe { [weak self] result in
                 switch result {

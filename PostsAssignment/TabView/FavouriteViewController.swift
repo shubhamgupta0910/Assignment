@@ -42,7 +42,6 @@ class FavouriteViewController: UIViewController {
 
 extension FavouriteViewController: UITableViewDelegate {
     
-    // This method adds the swipe action for removing from favourites
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let deleteAction = UIContextualAction(style: .destructive, title: "Unfavourite") { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
@@ -53,11 +52,9 @@ extension FavouriteViewController: UITableViewDelegate {
             // Toggle the favourite status
             self.viewModel.toggleFavourite(postId: post.id)
             
-            // Completion handler to indicate the action was performed
             completionHandler(true)
         }
         
-        // Customize the delete action appearance
         deleteAction.image = UIImage(systemName: "star.slash")
         
         // Create the swipe actions configuration

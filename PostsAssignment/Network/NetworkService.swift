@@ -10,10 +10,8 @@ import Alamofire
 import RxSwift
 
 class NetworkService {
-    
-    static let shared = NetworkService()
-    
-    private init() {}
+        
+    init() {}
     
     func fetchPosts() -> Single<[PostModel]> {
         return Single<[PostModel]>.create { single in

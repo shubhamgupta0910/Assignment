@@ -16,10 +16,13 @@ class PostsViewController: UIViewController {
     var viewModel = PostsViewModel()
     private let disposeBag = DisposeBag()
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.loadPostsFromRealm()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel.loadPostsFromRealm()
         
         setupTableViewBinding()
         
@@ -37,7 +40,7 @@ class PostsViewController: UIViewController {
             .bind(to: tableView.rx.items(cellIdentifier: "PostCell", cellType: PostCell.self)) { row, post, cell in
                 cell.titleLabel?.text = post.title
                 cell.descLabel?.text = post.body
-                //                cell.accessoryType = post.favourite ? .checkmark : .none
+                cell.accessoryType = post.favourite ? .checkmark : .none
             }
             .disposed(by: disposeBag)
         

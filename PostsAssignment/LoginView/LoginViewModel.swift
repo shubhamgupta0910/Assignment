@@ -22,23 +22,16 @@ class LoginViewModel {
         isEmailValid = email
             .asObservable()
             .map { email in
-                let emailRegEx = "^[A-Z0-9a-z._%+-]+@[A-Z0-9a-z.-]+\\.[A-Za-z]{2,64}$"
-                let emailPred = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
-                return emailPred.evaluate(with: email)
+                return Utils.checkValidEmail(email: email)
             }
         
         isPasswordValid = password
             .asObservable()
             .map { password in
-                return password.count >= 8 && password.count <= 15
+                return Utils.checkValidPassword(password: password)
             }
         
         isSubmitEnabled = Observable.combineLatest(isEmailValid, isPasswordValid) { $0 && $1 }
         
     }
-    
-    func loginClicked() {
-        
-    }
-    
 }

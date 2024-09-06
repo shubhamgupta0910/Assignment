@@ -19,7 +19,6 @@ class PostModel: Object, Codable {
         return "id"
     }
     
-    // Implement this to map between JSON keys and your properties
     private enum CodingKeys: String, CodingKey {
         case userId, id, title, body
     }
