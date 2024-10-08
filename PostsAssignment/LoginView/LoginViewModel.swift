@@ -20,18 +20,20 @@ class LoginViewModel {
     
     init() {
         isEmailValid = email
-            .asObservable()
             .map { email in
                 return Utils.checkValidEmail(email: email)
             }
         
         isPasswordValid = password
-            .asObservable()
             .map { password in
                 return Utils.checkValidPassword(password: password)
             }
         
         isSubmitEnabled = Observable.combineLatest(isEmailValid, isPasswordValid) { $0 && $1 }
         
+    }
+    
+    func isLoggedIn() -> Bool {
+        return UserDefaults.standard.bool(forKey: "isLoggedIn")
     }
 }

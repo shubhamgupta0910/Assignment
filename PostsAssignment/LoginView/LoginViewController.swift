@@ -19,7 +19,7 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if isLoggedIn() {
+        if viewModel.isLoggedIn() {
             navigateToNextScreen()
         }
     }
@@ -42,10 +42,7 @@ class LoginViewController: UIViewController {
             .disposed(by: disposeBag)
         
         viewModel.isSubmitEnabled
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] isEnabled in
-                self?.loginButton.isEnabled = isEnabled
-            })
+            .bind(to: loginButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
         loginButton.rx.tap.asObservable().subscribe(onNext: { [weak self] _ in
@@ -59,10 +56,5 @@ class LoginViewController: UIViewController {
     private func navigateToNextScreen() {
         self.performSegue(withIdentifier: "login", sender: nil)
     }
-    
-    func isLoggedIn() -> Bool {
-        return UserDefaults.standard.bool(forKey: "isLoggedIn")
-    }
-
 }
 
